@@ -1,7 +1,7 @@
 {
   "name": "pitchinnate/eboomvc",
   "description": "A simple php mvc framework",
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Nate Denlinger",
