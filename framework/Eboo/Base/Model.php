@@ -44,10 +44,7 @@ class Model
     public static function getInstance()
     {
         $class = get_called_class();
-        if (is_null(self::$instance)) {
-            self::$instance = new $class();
-        }
-        return self::$instance;
+        return new $class();
     }
 
     public function getColumns()
@@ -140,11 +137,11 @@ class Model
     {
         $model = self::getInstance();
         $result = $model->app->getDatabase()->selectQuery($criteria,$model->getTable());
-        ddd($result);
         if ($result) {
-            $result->isNew = false;
+            $model->setValues($result);
+            $model->isNew = false;
         }
-        return $result;
+        return $model;
     }
 
     public static function findAll($criteria = [])
