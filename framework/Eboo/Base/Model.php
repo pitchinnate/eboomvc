@@ -53,11 +53,8 @@ class Model
     public function getColumns()
     {
         $class = $this->called_class;
-        d($class);
-        d($class::$column_array);
         if(empty($class::$column_array)) {
             $result = $this->database->getTableColumns($this->table);
-            $columns = [];
             foreach ($result as $column) {
                 $fieldName = $column['Field'];
                 $columns[] = $fieldName;
@@ -68,9 +65,7 @@ class Model
             }
             $class::$column_array = $columns;
         }
-        d($class::$column_array);
-        $this->columns = self::$column_array;
-        d($this->columns);
+        return $class::$column_array;
     }
 
     public function getValues()
