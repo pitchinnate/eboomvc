@@ -51,7 +51,6 @@ class Model
 
     public function getColumns()
     {
-        ddd($this->table);
         if(count($this->columns) == 0) {
             $result = $this->app->getDatabase()->getTableColumns($this->table);
             foreach ($result as $column) {
@@ -130,10 +129,15 @@ class Model
         }
     }
 
+    public function getTable()
+    {
+        return $this->table;
+    }
+
     public static function find($criteria = [])
     {
         $model = self::getInstance();
-        $result = $model->app->getDatabase()->selectQuery($criteria,$model->table);
+        $result = $model->app->getDatabase()->selectQuery($criteria,$model->getTable());
         if ($result) {
             $result->isNew = false;
         }
@@ -143,7 +147,7 @@ class Model
     public static function findAll($criteria = [])
     {
         $model = self::getInstance();
-        $result = $model->app->getDatabase()->selectQuery($criteria,$model->table,false);
+        $result = $model->app->getDatabase()->selectQuery($criteria,$model->getTable(),false);
         if ($result) {
             foreach ($result as $res) {
                 $res->isNew = false;
