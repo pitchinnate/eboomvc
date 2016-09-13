@@ -21,7 +21,7 @@ class Request
         $this->uri = $_SERVER['REQUEST_URI'];
         $this->query = $_SERVER['QUERY_STRING'];
         $this->route = str_replace("?{$this->query}","",$this->uri);
-        $this->full_url = $this->protocol . $this->host . DIRECTORY_SEPARATOR . $this->uri;
+        $this->full_url = $this->protocol . $this->host . $this->uri;
         $this->request_type = $_SERVER['REQUEST_METHOD'];
         $this->server = $_SERVER;
     }
