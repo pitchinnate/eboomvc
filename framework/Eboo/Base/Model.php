@@ -10,7 +10,6 @@ class Model
 
     private $columns = [];
     public $values;
-    private static $column_array;
     public $primary_key = [];
     private $isNew = true;
     public $errors = [];
@@ -52,6 +51,7 @@ class Model
 
     public function getColumns()
     {
+        ddd($this->table);
         if(count($this->columns) == 0) {
             $result = $this->app->getDatabase()->getTableColumns($this->table);
             foreach ($result as $column) {
