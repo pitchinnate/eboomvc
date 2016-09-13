@@ -55,9 +55,10 @@ class Model
         if(count($this->columns) == 0) {
             $result = $this->app->getDatabase()->getTableColumns($this->table);
             foreach ($result as $column) {
-                $this->values->$column['Field'] = null;
+                $fieldName = $column['Field'];
+                $this->values->$fieldName = null;
                 if ($column['Key'] == 'PRI') {
-                    $this->primary_key[$column['Field']] = null;
+                    $this->primary_key[$fieldName] = null;
                 }
             }
         }
