@@ -44,8 +44,22 @@ class App
         $reflected = new \ReflectionClass($namespacedController);
         $method = $reflected->getMethod($function);
         $arguments = $method->getParameters();
-        var_dump($arguments[0]->getClass());
-        var_dump($arguments[1]->getClass());
-        ddd($arguments);
+
+        $passArguements = [];
+        foreach($arguments as $arguement) {
+            if($arguement->getClass() == 'Eboo\Request') {
+                $passArguements[] = $request;
+            } else {
+                if(array_key_exists($arguement->name,$variables)) {
+                    $passArguements[] = $variables[$arguement->name];
+                } else {
+                    if(!$arguement->isOptional()) {
+                        throw new \Exception("{$arguement->name} must be passed in to the function");
+                    }
+                }
+            }
+        }
+        $response = call_user_func_array([$controllerInstance,$function],$passArguements);
+        ddd($response);
     }
 }
