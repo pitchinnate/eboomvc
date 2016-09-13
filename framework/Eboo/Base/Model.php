@@ -6,10 +6,12 @@ class Model
 {
     protected $table;
     private static $instance;
+    private $app;
 
     public function __construct()
     {
-        echo "_connstruct called <br>";
+        $this->app = \Eboo\Factory\AppFactory::getApp();
+        ddd($this->app->getConfig('db'));
     }
 
     public static function findById($id)
