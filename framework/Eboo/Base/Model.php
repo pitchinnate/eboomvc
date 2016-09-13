@@ -6,7 +6,6 @@ class Model
 {
     protected $table;
     protected $database;
-    protected $columns;
     protected $isNew = true;
     protected $values;
     protected $primary_key = [];
@@ -15,14 +14,13 @@ class Model
     protected static $column_array;
 
     public $called_class;
+    public $columns;
 
     public function __construct($id=null)
     {
         $this->database = \Eboo\Factory\DatabaseFactory::getDatabase();
 
         $this->called_class = get_called_class();
-        d($this->called_class);
-
         $this->values = new \stdClass();
         $this->columns = $this->getColumns();
 
