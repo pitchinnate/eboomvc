@@ -1,6 +1,7 @@
 {
   "name": "pitchinnate/eboomvc",
-  "version": "0.1.0-dev",
+  "description": "A simple php mvc framework",
+  "minimum-stability": "dev"
   "authors": [
     {
       "name": "Nate Denlinger",
