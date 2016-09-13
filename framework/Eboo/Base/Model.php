@@ -86,7 +86,7 @@ class Model
 
     public function delete()
     {
-        $query_builder = $this->app->getDatabase()->find_query($this->primary_key);
+        $query_builder = $this->app->getDatabase()->findQuery($this->primary_key);
         $result = $this->app->getDatabase()->query("Delete from `{$this->table}` {$query_builder['query']} limit 1", $query_builder['values']);
         if (!$result) {
             throw new \Exception('Error deleting from the database');
@@ -96,10 +96,9 @@ class Model
     public function save()
     {
         if ($this->isNew) {
-            $this->insert();
-        } else {
-            $this->update();
+            return $this->insert();
         }
+        return $this->update();
     }
 
     public function insert()
