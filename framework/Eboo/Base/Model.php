@@ -43,8 +43,9 @@ class Model
 
     public static function getInstance()
     {
+        $class = get_called_class();
         if (is_null(self::$instance)) {
-            self::$instance = new get_called_class();
+            self::$instance = new $class();
         }
         return self::$instance;
     }
