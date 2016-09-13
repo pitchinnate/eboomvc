@@ -140,6 +140,7 @@ class Model
     {
         $model = self::getInstance();
         $result = $model->app->getDatabase()->selectQuery($criteria,$model->getTable());
+        ddd($result);
         if ($result) {
             $result->isNew = false;
         }
