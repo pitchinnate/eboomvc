@@ -6,7 +6,7 @@ use Eboo\App;
 
 class AppFactory
 {
-    private $app;
+    private static $app;
 
     public static function getApp($config = [])
     {
