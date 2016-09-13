@@ -45,8 +45,13 @@ class App
         if(is_object($response)) {
             $response->html();
         } else {
-            echo "Not sure what to do with this response type";
-            ddd($response);
+            if(is_string($response)) {
+                $response = new Response($response,200);
+                $response->html();
+            } else {
+                echo "Not sure what to do with this response type";
+                ddd($response);
+            }
         }
     }
 
