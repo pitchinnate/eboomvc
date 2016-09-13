@@ -8,7 +8,7 @@ class AppFactory
 {
     private $app;
 
-    public static function getApp($config)
+    public static function getApp($config = [])
     {
         if (!self::$app)
             self::$app = new App($config);
