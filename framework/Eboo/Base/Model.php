@@ -55,7 +55,7 @@ class Model
         $class = $this->called_class;
         d($class);
         d($class::$column_array);
-        if(empty(self::$column_array)) {
+        if(empty($class::$column_array)) {
             $result = $this->database->getTableColumns($this->table);
             $columns = [];
             foreach ($result as $column) {
