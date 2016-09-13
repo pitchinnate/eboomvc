@@ -101,4 +101,9 @@ class App
 
         return $variable;
     }
+
+    public function getDatabase()
+    {
+        return $this->database;
+    }
 }

@@ -8,15 +8,38 @@ class Model
     private static $instance;
     private $app;
 
-    public function __construct()
+    private $columns = [];
+    public $values;
+    private static $column_array;
+    public $primary_key = [];
+    private $isNew = true;
+    public $errors = [];
+
+    public function __construct($id=null)
     {
         $this->app = \Eboo\Factory\AppFactory::getApp();
+
+        $this->values = new stdClass();
+        $this->columns = $this->get_columns();
+
+        if (isset($id)) {
+            $this->isNew = false;
+            $this->setPrimaryKey($id);
+            $this->get_values();
+        }
     }
 
-    public static function findById($id)
+    private function setPrimaryKey($id)
     {
-        $model = self::getInstance();
-        return $model->query(['id'=>$id]);
+        if (is_array($id)) {
+            foreach ($id as $key => $val) {
+                $this->primary_key[$key] = $val;
+            }
+        } else {
+            foreach ($this->primary_key as $key => $val) {
+                $this->primary_key[$key] = $id;
+            }
+        }
     }
 
     public static function getInstance()
@@ -27,8 +50,118 @@ class Model
         return self::$instance;
     }
 
-    public function query($values)
+    public function get_columns()
     {
-        return $values;
+        if(count($this->columns) == 0) {
+            $result = $this->app->getDatabase()->getTableColumns($this->table);
+            foreach ($result as $column) {
+                $this->values->$column['Field'] = null;
+                if ($column['Key'] == 'PRI') {
+                    $this->primary_key[$column['Field']] = null;
+                }
+            }
+        }
+    }
+
+    public function get_values()
+    {
+        $query_builder = $this->app->getDatabase()->find_query($this->primary_key);
+        $result = $this->app->getDatabase()->fetch("SELECT * from `{$this->table}` {$query_builder['query']} limit 1", $query_builder['values']);
+        if (!$result) {
+            throw new \Exception('Error running sql query');
+        }
+        foreach ($result as $key => $val) {
+            $this->values->$key = $val;
+        }
+        return $result;
+    }
+
+    public function set_values(array $in_array)
+    {
+        foreach ($this->values as $key => $val) {
+            if (isset($in_array[$key])) {
+                $this->values->$key = $in_array[$key];
+            }
+        }
+    }
+
+    public function delete()
+    {
+        $query_builder = $this->app->getDatabase()->find_query($this->primary_key);
+        $result = $this->app->getDatabase()->query("Delete from `{$this->table}` {$query_builder['query']} limit 1", $query_builder['values']);
+        if (!$result) {
+            throw new \Exception('Error deleting from the database');
+        }
+    }
+
+    public function save()
+    {
+        if ($this->isNew) {
+            $this->insert();
+        } else {
+            $this->update();
+        }
+    }
+
+    public function insert()
+    {
+        $query_builder = $this->app->getDatabase()->insertQuery($this->values,$this->table);
+        $result = $this->app->getDatabase()->query($query_builder['query'], $query_builder['values']);
+        if (count($this->primary_key) == 1) {
+            $id = $this->app->getDatabase()->lastInsertId();
+            foreach ($this->primary_key as $key => $val) {
+                $this->primary_key[$key] = $id;
+            }
+        } else {
+            foreach ($this->primary_key as $key => $val) {
+                $this->primary_key[$key] = $this->values->$key;
+            }
+        }
+        if (!$result) {
+            throw new \Exception('Error adding to database.');
+        }
+        $this->isNew = false;
+    }
+
+    public function update()
+    {
+        $query_builder = $this->app->getDatabase()->updateQuery($this->primary_key,$this->values,$this->table);
+        $result = $this->app->getDatabase()->query($query_builder['query'], $query_builder['values']);
+        if (!$result) {
+            throw new \Exception('Error updating database.');
+        }
+    }
+
+    public function find($criteria = [])
+    {
+        $result = $this->app->getDatabase()->selectQuery($criteria,$this->table);
+        if ($result) {
+            $result->isNew = false;
+        }
+        return $result;
+    }
+
+    public function findAll($criteria = [])
+    {
+        $result = $this->app->getDatabase()->selectQuery($criteria,$this->table,false);
+        if ($result) {
+            foreach ($result as $res) {
+                $res->isNew = false;
+            }
+        }
+        return $result;
+    }
+
+    public function __get($name)
+    {
+        if (method_exists($this, $name)) {
+            return null;
+        }
+        return $this->values->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->values->$name = $value;
     }
 }
