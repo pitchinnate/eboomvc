@@ -58,7 +58,7 @@ class App
         $arguments = $reflected->getMethod($function)->getParameters();
 
         $passArguements = $this->getArguments($arguments,$variables,$request);
-        return call_user_func_array([new $namespacedController(),$function],$passArguements);
+        return call_user_func_array([new $namespacedController($this),$function],$passArguements);
     }
 
     private function getArguments($arguments,$variables,Request $request)
