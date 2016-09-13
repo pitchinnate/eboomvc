@@ -13,7 +13,8 @@ class Model
     protected $errors;
 
     protected static $column_array;
-    protected $called_class;
+
+    public $called_class;
 
     public function __construct($id=null)
     {
@@ -22,6 +23,7 @@ class Model
         $this->values = new \stdClass();
         $this->columns = $this->getColumns();
         $this->called_class = get_called_class();
+        d($this->called_class);
 
         if (isset($id)) {
             $this->isNew = false;
