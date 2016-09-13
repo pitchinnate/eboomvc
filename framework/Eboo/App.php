@@ -10,4 +10,9 @@ class App
 
     }
 
+    public function run()
+    {
+        echo "hello";
+        die();
+    }
 }
