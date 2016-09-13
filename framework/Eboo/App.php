@@ -4,15 +4,16 @@ namespace Eboo;
 
 class App
 {
+    protected $config;
 
-    public function __construct()
+    public function __construct($config)
     {
-
+        $this->config = $config;
     }
 
     public function run()
     {
-        echo "hello";
+        var_dump($this->config);
         die();
     }
 }
