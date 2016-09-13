@@ -5,12 +5,12 @@ namespace Eboo\Base;
 class Model
 {
     protected $table;
-    private $database;
-    private $columns = [];
-    public $values;
-    public $primary_key = [];
-    private $isNew = true;
-    public $errors = [];
+    protected $database;
+    protected $columns = [];
+    protected $isNew = true;
+    protected $values;
+    protected $primary_key = [];
+    protected $errors = [];
 
     public function __construct($id=null)
     {
