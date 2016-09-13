@@ -56,7 +56,7 @@ class Database
         }
         $sql_query->execute();
         if ($sql_query->errorCode() > 0) {
-            throw new \Exception('Error running query. ' . print_r($sql_query->errorInfo(),true));
+            throw new \Exception('Error running query. ' . print_r($sql_query->errorInfo(),true) . "<br><br>Query: {$query} <br><br>");
         }
         return $sql_query;
     }
