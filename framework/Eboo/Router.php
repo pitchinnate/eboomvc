@@ -16,6 +16,9 @@ class Router
     public function getRoute(Request $request)
     {
         foreach($this->routes as $route => $action) {
+            if(substr($route,0,1) != '/') {
+                $route = "/" . $route;
+            }
             if($request->getRoute() == $route) {
                 $this->action = $action;
                 break;
