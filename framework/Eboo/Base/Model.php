@@ -151,7 +151,7 @@ class Model
             foreach ($result as $res) {
                 $res->isNew = false;
                 $res->updatePrimary();
-                $result->getColumns();
+                $res->getColumns();
             }
         }
         return $result;
