@@ -19,7 +19,6 @@ class Database
     public function __construct($credentials)
     {
         $this->credentials = $credentials;
-        $this->connect();
     }
 
     public function connect()
@@ -41,6 +40,7 @@ class Database
 
     public function query($query, $values = [], $options = [])
     {
+        $this->connect();
         $sql_query = $this->connection->prepare($query);
         if (!$sql_query) {
             throw new \Exception('Error preparing query');
