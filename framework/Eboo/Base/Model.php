@@ -12,6 +12,8 @@ class Model
     protected $primary_key = [];
     protected $errors = [];
 
+    protected static $column_array = [];
+
     public function __construct($id=null)
     {
         $this->database = \Eboo\Factory\DatabaseFactory::getDatabase();
@@ -47,8 +49,9 @@ class Model
 
     public function getColumns()
     {
-        if(count($this->columns) == 0) {
+        if(count(self::$column_array) == 0) {
             $result = $this->database->getTableColumns($this->table);
+            self::$column_array = $result;
             foreach ($result as $column) {
                 $fieldName = $column['Field'];
                 $this->values->$fieldName = null;
@@ -57,6 +60,7 @@ class Model
                 }
             }
         }
+        $this->columns = self::$column_array;
     }
 
     public function getValues()
