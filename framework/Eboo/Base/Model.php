@@ -53,7 +53,6 @@ class Model
     {
         $class = $this->called_class;
         if(!isset(self::$column_array[$class])) {
-            echo "Getting columns for {$class} <br>";
             $result = $this->database->getTableColumns($this->table);
             foreach ($result as $column) {
                 $fieldName = $column['Field'];
