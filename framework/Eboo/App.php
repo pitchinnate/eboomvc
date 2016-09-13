@@ -24,7 +24,7 @@ class App
         } catch (\Exception $e) {
             $response = new Response("Error: {$e->getMessage()}<br><br>File: {$e->getFile()}<br><br>Line: {$e->getLine()}");
         }
-        $response->html();
+        $this->handleResponse($response);
     }
 
     public function getRoute(Router $router, Request $request)
@@ -40,6 +40,12 @@ class App
         }
     }
 
+    private function handleResponse($response)
+    {
+        ddd(get_class($response));
+        $response->html();
+    }
+
     private function callController($action,$variables,Request $request)
     {
         list($controller,$function) = explode('->',$action);
@@ -47,12 +53,11 @@ class App
         $reflected = new \ReflectionClass($namespacedController);
         $arguments = $reflected->getMethod($function)->getParameters();
 
-        $passArguements = $this->getArguements($arguments,$variables,$request);
-        $response = call_user_func_array([new $namespacedController(),$function],$passArguements);
-        ddd($response);
+        $passArguements = $this->getArguments($arguments,$variables,$request);
+        return call_user_func_array([new $namespacedController(),$function],$passArguements);
     }
 
-    private function getArguements($arguments,$variables,Request $request)
+    private function getArguments($arguments,$variables,Request $request)
     {
         $passArguements = [];
         foreach($arguments as $arguement) {
