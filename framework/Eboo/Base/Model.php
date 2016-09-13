@@ -51,15 +51,16 @@ class Model
     {
         if(empty(self::$column_array)) {
             $result = $this->database->getTableColumns($this->table);
-            d($result);
-            self::$column_array = $result;
+            $columns = [];
             foreach ($result as $column) {
                 $fieldName = $column['Field'];
+                $columns[] = $fieldName;
                 $this->values->$fieldName = null;
                 if ($column['Key'] == 'PRI') {
                     $this->primary_key[$fieldName] = null;
                 }
             }
+            self::$column_array = $columns;
         }
         $this->columns = self::$column_array;
     }
