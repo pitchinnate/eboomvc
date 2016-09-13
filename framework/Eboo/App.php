@@ -54,7 +54,7 @@ class App
                     $passArguements[] = $variables[$arguement->name];
                 } else {
                     if(!$arguement->isOptional()) {
-                        throw new \Exception("{$arguement->name} {$arguement->getClass()} must be passed in to the function");
+                        return new Response("{$arguement->name} {$arguement->getClass()} must be passed in to the function",500);
                     }
                 }
             }
