@@ -42,8 +42,12 @@ class App
 
     private function handleResponse($response)
     {
-        ddd(get_class($response));
-        $response->html();
+        if(is_object($response)) {
+            $response->html();
+        } else {
+            echo "Not sure what to do with this response type";
+            ddd($response);
+        }
     }
 
     private function callController($action,$variables,Request $request)
