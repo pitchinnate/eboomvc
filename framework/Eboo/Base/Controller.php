@@ -3,6 +3,7 @@
 namespace Eboo\Base;
 
 use Eboo\App;
+use Eboo\Response;
 
 class Controller
 {
@@ -19,7 +20,7 @@ class Controller
         $twig = new \Twig_Environment($loader,[
             'cache' => $this->app->getConfig('view.cachePath')
         ]);
-        return $twig->render($viewName, $values);
+        return (new Response($twig->render($viewName, $values),200));
     }
 
 }
