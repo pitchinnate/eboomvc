@@ -13,6 +13,7 @@ class Model
     protected $errors;
 
     protected static $column_array;
+    protected $called_class;
 
     public function __construct($id=null)
     {
@@ -20,6 +21,7 @@ class Model
 
         $this->values = new \stdClass();
         $this->columns = $this->getColumns();
+        $this->called_class = get_called_class();
 
         if (isset($id)) {
             $this->isNew = false;
@@ -49,7 +51,8 @@ class Model
 
     public function getColumns()
     {
-        d(self::$column_array);
+        $class = $this->called_class;
+        d($class::$column_array);
         if(empty(self::$column_array)) {
             $result = $this->database->getTableColumns($this->table);
             $columns = [];
@@ -61,9 +64,9 @@ class Model
                     $this->primary_key[$fieldName] = null;
                 }
             }
-            self::$column_array = $columns;
+            $class::$column_array = $columns;
         }
-        d(self::$column_array);
+        d($class::$column_array);
         $this->columns = self::$column_array;
         d($this->columns);
     }
