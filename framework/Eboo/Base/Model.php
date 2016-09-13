@@ -10,11 +10,10 @@ class Model
     protected $values;
     protected $primary_key = [];
     protected $errors;
+    protected $called_class;
+    protected $columns;
 
     protected static $column_array;
-
-    public $called_class;
-    public $columns;
 
     public function __construct($id=null)
     {
