@@ -56,7 +56,7 @@ class Database
         }
         $sql_query->execute();
         if ($sql_query->errorCode() > 0) {
-            throw new \Exception('Error running query. ' . $sql_query->errorInfo());
+            throw new \Exception('Error running query. ' . print_r($sql_query->errorInfo(),true));
         }
         return $sql_query;
     }
@@ -85,8 +85,7 @@ class Database
 
     public function getTableColumns($table)
     {
-        $result = $this->fetch("SHOW COLUMNS FROM `{$table}`");
-        return $result;
+        return $this->fetch("SHOW COLUMNS FROM `{$table}`");
     }
 
     public function findQuery($criteria = [])
