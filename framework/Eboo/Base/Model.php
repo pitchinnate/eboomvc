@@ -51,6 +51,7 @@ class Model
     {
         if(empty(self::$column_array)) {
             $result = $this->database->getTableColumns($this->table);
+            d($result);
             self::$column_array = $result;
             foreach ($result as $column) {
                 $fieldName = $column['Field'];
