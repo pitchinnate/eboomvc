@@ -19,13 +19,13 @@ class Model
     {
         $this->app = \Eboo\Factory\AppFactory::getApp();
 
-        $this->values = new stdClass();
-        $this->columns = $this->get_columns();
+        $this->values = new \stdClass();
+        $this->columns = $this->getColumns();
 
         if (isset($id)) {
             $this->isNew = false;
             $this->setPrimaryKey($id);
-            $this->get_values();
+            $this->getValues();
         }
     }
 
@@ -50,7 +50,7 @@ class Model
         return self::$instance;
     }
 
-    public function get_columns()
+    public function getColumns()
     {
         if(count($this->columns) == 0) {
             $result = $this->app->getDatabase()->getTableColumns($this->table);
@@ -63,10 +63,9 @@ class Model
         }
     }
 
-    public function get_values()
+    public function getValues()
     {
-        $query_builder = $this->app->getDatabase()->find_query($this->primary_key);
-        $result = $this->app->getDatabase()->fetch("SELECT * from `{$this->table}` {$query_builder['query']} limit 1", $query_builder['values']);
+        $result = $this->app->getDatabase()->selectQuery($this->primary_key);
         if (!$result) {
             throw new \Exception('Error running sql query');
         }
@@ -76,7 +75,7 @@ class Model
         return $result;
     }
 
-    public function set_values(array $in_array)
+    public function setValues(array $in_array)
     {
         foreach ($this->values as $key => $val) {
             if (isset($in_array[$key])) {
