@@ -139,7 +139,6 @@ class Model
     public static function find($criteria = [])
     {
         $model = self::getInstance();
-        ddd($model);
         $result = $model->app->getDatabase()->selectQuery($criteria,$model->getTable());
         if ($result) {
             $result->isNew = false;
