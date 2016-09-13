@@ -62,6 +62,7 @@ class Model
             }
             self::$column_array = $columns;
         }
+        d(self::$column_array);
         $this->columns = self::$column_array;
     }
 
