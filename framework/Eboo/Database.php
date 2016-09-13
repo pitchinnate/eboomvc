@@ -19,7 +19,6 @@ class Database
     public function __construct($credentials)
     {
         $this->credentials = $credentials;
-        ddd($credentials);
         $this->connect();
     }
 
