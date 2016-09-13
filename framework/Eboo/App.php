@@ -15,11 +15,35 @@ class App
         $this->router = new Router($this->config['routes']);
         $this->database = new Database($this->config['db']);
         $this->request = new Request();
-        ddd($this->request);
     }
 
     public function run()
     {
-        $route = $this->router->getRoute();
+        $response = $this->getRoute($this->router,$this->request);
+        $response->html();
+    }
+
+    public function getRoute(Router $router, Request $request)
+    {
+        list($action,$variables) = $router->getRoute($request);
+        if(!$action) {
+            return new Response('Page Not Found',404);
+        }
+        if(is_callable($action)) {
+            return $action($variables);
+        } else {
+            return $this->callController($action,$variables,$request);
+        }
+    }
+
+    private function callController($action,$variables,Request $request)
+    {
+        list($controller,$function) = explode('->',$action);
+        $namespacedController = "\\app\\Controller\\{$controller}";
+        $controllerInstance = new $namespacedController();
+        $reflected = new \ReflectionClass($namespacedController);
+        $method = $reflected->getMethod($function);
+        $arguments = $method->getParameters();
+        ddd($arguments);
     }
 }
