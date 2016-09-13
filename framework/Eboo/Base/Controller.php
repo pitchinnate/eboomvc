@@ -18,7 +18,8 @@ class Controller
     {
         $loader = new \Twig_Loader_Filesystem($this->app->getConfig('view.templatePath'));
         $twig = new \Twig_Environment($loader,[
-            'cache' => $this->app->getConfig('view.cachePath')
+            'cache' => $this->app->getConfig('view.cachePath'),
+            'auto_reload' => true,
         ]);
         return (new Response($twig->render($viewName, $values),200));
     }
