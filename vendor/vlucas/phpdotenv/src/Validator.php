@@ -29,7 +29,7 @@ class Validator
     /**
      * Create a new validator instance.
      *
-     * @param array          $variables
+     * @param array $variables
      * @param \Dotenv\Loader $loader
      *
      * @return void
@@ -98,7 +98,7 @@ class Validator
      * Assert that the callback returns true for each variable.
      *
      * @param callable $callback
-     * @param string   $message
+     * @param string $message
      *
      * @throws \Dotenv\Exception\InvalidCallbackException|\Dotenv\Exception\ValidationException
      *
@@ -114,7 +114,7 @@ class Validator
         foreach ($this->variables as $variableName) {
             $variableValue = $this->loader->getEnvironmentVariable($variableName);
             if (call_user_func($callback, $variableValue) === false) {
-                $variablesFailingAssertion[] = $variableName." $message";
+                $variablesFailingAssertion[] = $variableName . " $message";
             }
         }
 

@@ -32,7 +32,7 @@ class Loader
      * Create a new loader instance.
      *
      * @param string $filePath
-     * @param bool   $immutable
+     * @param bool $immutable
      *
      * @return void
      */
@@ -320,7 +320,7 @@ class Loader
      *
      * The environment variable value is stripped of single and double quotes.
      *
-     * @param string      $name
+     * @param string $name
      * @param string|null $value
      *
      * @return void

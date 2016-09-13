@@ -72,7 +72,7 @@ class Dotenv
             $file = '.env';
         }
 
-        $filePath = rtrim($path, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;
+        $filePath = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
 
         return $filePath;
     }
@@ -100,6 +100,6 @@ class Dotenv
      */
     public function required($variable)
     {
-        return new Validator((array) $variable, $this->loader);
+        return new Validator((array)$variable, $this->loader);
     }
 }
