@@ -2,6 +2,10 @@
 
 namespace Eboo;
 
+use Eboo\Factory\DatabaseFactory;
+use Eboo\Factory\RequestFactory;
+use Eboo\Factory\RouterFactory;
+
 class App
 {
     protected $config;
@@ -12,9 +16,9 @@ class App
     public function __construct($config)
     {
         $this->config = $config;
-        $this->router = new Router($this->config['routes']);
-        $this->database = new Database($this->config['db']);
-        $this->request = new Request();
+        $this->router = RouterFactory::getRouter($this->config['routes']);
+        $this->database = DatabaseFactory::getDatabase($this->config['db']);
+        $this->request = RequestFactory::getRequest();
     }
 
     public function run()

@@ -11,7 +11,6 @@ class Model
     public function __construct()
     {
         $this->app = \Eboo\Factory\AppFactory::getApp();
-        ddd($this->app->getConfig('db'));
     }
 
     public static function findById($id)
