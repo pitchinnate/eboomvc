@@ -79,4 +79,17 @@ class App
         }
         return $passArguements;
     }
+
+    public function getConfig($setting)
+    {
+        $pieces = explode('.',$setting);
+        $name = array_shift($pieces);
+        $variable = $this->config[$name];
+        while(count($pieces) > 0) {
+            $name = array_shift($pieces);
+            $variable = $variable[$name];
+        }
+
+        return $variable;
+    }
 }
