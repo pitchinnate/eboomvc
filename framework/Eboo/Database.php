@@ -85,7 +85,7 @@ class Database
 
     public function getTableColumns($table)
     {
-        return $this->fetch("SHOW COLUMNS FROM `{$table}`");
+        return $this->fetchAll("SHOW COLUMNS FROM `{$table}`");
     }
 
     public function findQuery($criteria = [])
