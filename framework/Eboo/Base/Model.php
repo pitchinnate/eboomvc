@@ -6,11 +6,11 @@ class Model
 {
     protected $table;
     protected $database;
-    protected $columns = [];
+    protected $columns;
     protected $isNew = true;
     protected $values;
-    protected $primary_key = [];
-    protected $errors = [];
+    protected $primary_key;
+    protected $errors;
 
     protected static $column_array;
 
