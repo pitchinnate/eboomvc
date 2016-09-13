@@ -132,18 +132,20 @@ class Model
         }
     }
 
-    public function find($criteria = [])
+    public static function find($criteria = [])
     {
-        $result = $this->app->getDatabase()->selectQuery($criteria,$this->table);
+        $model = self::getInstance();
+        $result = $model->app->getDatabase()->selectQuery($criteria,$model->table);
         if ($result) {
             $result->isNew = false;
         }
         return $result;
     }
 
-    public function findAll($criteria = [])
+    public static function findAll($criteria = [])
     {
-        $result = $this->app->getDatabase()->selectQuery($criteria,$this->table,false);
+        $model = self::getInstance();
+        $result = $model->app->getDatabase()->selectQuery($criteria,$model->table,false);
         if ($result) {
             foreach ($result as $res) {
                 $res->isNew = false;
