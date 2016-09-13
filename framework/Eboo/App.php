@@ -39,7 +39,7 @@ class App
     private function callController($action,$variables,Request $request)
     {
         list($controller,$function) = explode('->',$action);
-        $namespacedController = "\\app\\Controllers\\{$controller}";
+        $namespacedController = "app\\Controllers\\{$controller}";
         $controllerInstance = new $namespacedController();
         $reflected = new \ReflectionClass($namespacedController);
         $method = $reflected->getMethod($function);
