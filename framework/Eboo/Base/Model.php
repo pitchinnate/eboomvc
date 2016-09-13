@@ -13,7 +13,7 @@ class Model
     protected $called_class;
     protected $columns;
 
-    protected static $column_array;
+    protected static $column_array = [];
 
     public function __construct($id=null)
     {
@@ -52,7 +52,7 @@ class Model
     public function getColumns()
     {
         $class = $this->called_class;
-        if(empty($class::$column_array)) {
+        if(!isset(self::$column_array[$class])) {
             echo "Getting columns for {$class} <br>";
             $result = $this->database->getTableColumns($this->table);
             foreach ($result as $column) {
@@ -63,9 +63,9 @@ class Model
                     $this->primary_key[$fieldName] = null;
                 }
             }
-            $class::$column_array = $columns;
+            self::$column_array[$class] = $columns;
         }
-        return $class::$column_array;
+        return self::$column_array[$class];
     }
 
     public function getValues()
