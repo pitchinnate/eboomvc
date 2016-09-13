@@ -6,26 +6,30 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit7e72d5a40034996561721504974f4f0b
 {
-    public static $prefixLengthsPsr4 = array(
-        'E' =>
-            array(
-                'Eboo\\' => 5,
-            ),
-        'D' =>
-            array(
-                'Dotenv\\' => 7,
-            ),
+    public static $files = array (
+        '6bc45d0537e6858fd179bdbc31d62c79' => __DIR__ . '/..' . '/raveren/kint/Kint.class.php',
     );
 
-    public static $prefixDirsPsr4 = array(
-        'Eboo\\' =>
-            array(
-                0 => __DIR__ . '/../..' . '/framework/Eboo',
-            ),
-        'Dotenv\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
-            ),
+    public static $prefixLengthsPsr4 = array (
+        'E' => 
+        array (
+            'Eboo\\' => 5,
+        ),
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Eboo\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/framework/Eboo',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

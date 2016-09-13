@@ -4,9 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "924f9bf42331bd55c4b837a0e54125b3",
-    "content-hash": "90554e39af03ad203d3e047615d22133",
+    "hash": "ae94327a5bc65640675ad5a8b6c934f5",
+    "content-hash": "2ff41a1cfe8ab27c0cf66198f01788e1",
     "packages": [
+        {
+            "name": "raveren/kint",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/raveren/kint.git",
+                "reference": "1368541570b47b6d36dd6705105d70f78d69d1ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/raveren/kint/zipball/1368541570b47b6d36dd6705105d70f78d69d1ca",
+                "reference": "1368541570b47b6d36dd6705105d70f78d69d1ca",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Kint.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rokas Šleinius",
+                    "homepage": "https://github.com/raveren"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/raveren/kint/contributors"
+                }
+            ],
+            "description": "Kint - debugging helper for PHP developers",
+            "homepage": "https://github.com/raveren/kint",
+            "keywords": [
+                "debug",
+                "kint",
+                "php"
+            ],
+            "time": "2016-06-17 11:38:25"
+        },
         {
             "name": "vlucas/phpdotenv",
             "version": "v2.4.0",
@@ -60,7 +111,7 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
