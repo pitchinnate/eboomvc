@@ -15,7 +15,7 @@ class Controller
 
     public function view($viewName, array $values = [])
     {
-        $loader = new \Twig_Loader_Array($this->app->getConfig('view.templatePath'));
+        $loader = new \Twig_Loader_Filesystem($this->app->getConfig('view.templatePath'));
         $twig = new Twig_Environment($loader,[
             'cache' => $this->app->getConfig('view.cachePath')
         ]);
