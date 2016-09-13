@@ -44,6 +44,8 @@ class App
         $reflected = new \ReflectionClass($namespacedController);
         $method = $reflected->getMethod($function);
         $arguments = $method->getParameters();
+        var_dump($arguments[0]->getClass());
+        var_dump($arguments[1]->getClass());
         ddd($arguments);
     }
 }
