@@ -140,7 +140,7 @@ class Database
         ];
     }
 
-    public function selectQuery($criteria = [],$table,$single=true)
+    public function selectQuery($criteria = [],$table,$class,$single=true)
     {
         $query_builder = $this->findQuery($criteria);
         $limit = "";
@@ -149,6 +149,6 @@ class Database
             $limit = " limit 1 ";
             $method = 'fetch';
         }
-        return $this->$method("SELECT * from `{$table}` {$query_builder['query']} {$limit}", $query_builder['values'], array('class' => $table));
+        return $this->$method("SELECT * from `{$table}` {$query_builder['query']} {$limit}", $query_builder['values'], array('class' => $class));
     }
 }

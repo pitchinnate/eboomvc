@@ -5,9 +5,7 @@ namespace Eboo\Base;
 class Model
 {
     protected $table;
-    private static $instance;
-    private $app;
-
+    private $database;
     private $columns = [];
     public $values;
     public $primary_key = [];
@@ -16,7 +14,7 @@ class Model
 
     public function __construct($id=null)
     {
-        $this->app = \Eboo\Factory\AppFactory::getApp();
+        $this->database = \Eboo\Factory\DatabaseFactory::getDatabase();
 
         $this->values = new \stdClass();
         $this->columns = $this->getColumns();
@@ -50,7 +48,7 @@ class Model
     public function getColumns()
     {
         if(count($this->columns) == 0) {
-            $result = $this->app->getDatabase()->getTableColumns($this->table);
+            $result = $this->database->getTableColumns($this->table);
             foreach ($result as $column) {
                 $fieldName = $column['Field'];
                 $this->values->$fieldName = null;
@@ -63,7 +61,7 @@ class Model
 
     public function getValues()
     {
-        $result = $this->app->getDatabase()->selectQuery($this->primary_key);
+        $result = $this->database->selectQuery($this->primary_key);
         if (!$result) {
             throw new \Exception('Error running sql query');
         }
@@ -84,8 +82,8 @@ class Model
 
     public function delete()
     {
-        $query_builder = $this->app->getDatabase()->findQuery($this->primary_key);
-        $result = $this->app->getDatabase()->query("Delete from `{$this->table}` {$query_builder['query']} limit 1", $query_builder['values']);
+        $query_builder = $this->database->findQuery($this->primary_key);
+        $result = $this->database->query("Delete from `{$this->table}` {$query_builder['query']} limit 1", $query_builder['values']);
         if (!$result) {
             throw new \Exception('Error deleting from the database');
         }
@@ -101,10 +99,10 @@ class Model
 
     public function insert()
     {
-        $query_builder = $this->app->getDatabase()->insertQuery($this->values,$this->table);
-        $result = $this->app->getDatabase()->query($query_builder['query'], $query_builder['values']);
+        $query_builder = $this->database->insertQuery($this->values,$this->table);
+        $result = $this->database->query($query_builder['query'], $query_builder['values']);
         if (count($this->primary_key) == 1) {
-            $id = $this->app->getDatabase()->lastInsertId();
+            $id = $this->database->lastInsertId();
             foreach ($this->primary_key as $key => $val) {
                 $this->primary_key[$key] = $id;
             }
@@ -121,8 +119,8 @@ class Model
 
     public function update()
     {
-        $query_builder = $this->app->getDatabase()->updateQuery($this->primary_key,$this->values,$this->table);
-        $result = $this->app->getDatabase()->query($query_builder['query'], $query_builder['values']);
+        $query_builder = $this->database->updateQuery($this->primary_key,$this->values,$this->table);
+        $result = $this->database->query($query_builder['query'], $query_builder['values']);
         if (!$result) {
             throw new \Exception('Error updating database.');
         }
@@ -136,18 +134,17 @@ class Model
     public static function find($criteria = [])
     {
         $model = self::getInstance();
-        $result = $model->app->getDatabase()->selectQuery($criteria,$model->getTable());
+        $result = $model->database->selectQuery($criteria,$model->getTable(),get_called_class());
         if ($result) {
-            $model->setValues($result);
-            $model->isNew = false;
+            $result->isNew = false;
         }
-        return $model;
+        return $result;
     }
 
     public static function findAll($criteria = [])
     {
         $model = self::getInstance();
-        $result = $model->app->getDatabase()->selectQuery($criteria,$model->getTable(),false);
+        $result = $model->database->selectQuery($criteria,$model->getTable(),get_called_class(),false);
         if ($result) {
             foreach ($result as $res) {
                 $res->isNew = false;
