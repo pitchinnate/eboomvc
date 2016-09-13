@@ -52,6 +52,7 @@ class Model
     public function getColumns()
     {
         $class = $this->called_class;
+        d($class);
         d($class::$column_array);
         if(empty(self::$column_array)) {
             $result = $this->database->getTableColumns($this->table);
