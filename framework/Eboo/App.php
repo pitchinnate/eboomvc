@@ -19,7 +19,11 @@ class App
 
     public function run()
     {
-        $response = $this->getRoute($this->router,$this->request);
+        try{
+            $response = $this->getRoute($this->router,$this->request);
+        } catch (\Exception $e) {
+            $response = new Response("Error: {$e->getMessage()}<br><br>File: {$e->getFile()}<br><br>Line: {$e->getLine()}");
+        }
         $response->html();
     }
 
@@ -40,11 +44,16 @@ class App
     {
         list($controller,$function) = explode('->',$action);
         $namespacedController = "app\\Controllers\\{$controller}";
-        $controllerInstance = new $namespacedController();
         $reflected = new \ReflectionClass($namespacedController);
-        $method = $reflected->getMethod($function);
-        $arguments = $method->getParameters();
+        $arguments = $reflected->getMethod($function)->getParameters();
 
+        $passArguements = $this->getArguements($arguments,$variables,$request);
+        $response = call_user_func_array([new $namespacedController(),$function],$passArguements);
+        ddd($response);
+    }
+
+    private function getArguements($arguments,$variables,Request $request)
+    {
         $passArguements = [];
         foreach($arguments as $arguement) {
             if($arguement->getClass() && $arguement->getClass()->getName() == 'Eboo\Request') {
@@ -54,12 +63,11 @@ class App
                     $passArguements[] = $variables[$arguement->name];
                 } else {
                     if(!$arguement->isOptional()) {
-                        return new Response("{$arguement->name} must be passed in to the function",500);
+                        throw new \Exception("{$arguement->name} must be passed in to the function");
                     }
                 }
             }
         }
-        $response = call_user_func_array([$controllerInstance,$function],$passArguements);
-        ddd($response);
+        return $passArguements;
     }
 }

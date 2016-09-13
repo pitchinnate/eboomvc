@@ -4,11 +4,11 @@ namespace Eboo;
 
 class Response
 {
-    protected $headers = [];
-    protected $content = "";
-    protected $code = 200;
+    protected $headers;
+    protected $content;
+    protected $code;
 
-    public function __construct($content,$code,$headers=[])
+    public function __construct($content="",$code=200,$headers=[])
     {
         $this->content = $content;
         $this->code = $code;
