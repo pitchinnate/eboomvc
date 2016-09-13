@@ -15,6 +15,7 @@ class App
         $this->router = new Router($this->config['routes']);
         $this->database = new Database($this->config['db']);
         $this->request = new Request();
+        ddd($this->request);
     }
 
     public function run()
