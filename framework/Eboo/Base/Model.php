@@ -16,8 +16,6 @@ class Model
 
     public function __construct($id=null)
     {
-        ddd(get_called_class());
-
         $this->app = \Eboo\Factory\AppFactory::getApp();
 
         $this->values = new \stdClass();
@@ -45,6 +43,7 @@ class Model
 
     public static function getInstance()
     {
+        ddd(get_called_class());
         if (is_null(self::$instance)) {
             self::$instance = new self();
         }
