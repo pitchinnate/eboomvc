@@ -137,6 +137,7 @@ class Model
         $result = $model->database->selectQuery($criteria,$model->getTable(),get_called_class());
         if ($result) {
             $result->isNew = false;
+            $result->updatePrimary();
         }
         return $result;
     }
@@ -148,9 +149,17 @@ class Model
         if ($result) {
             foreach ($result as $res) {
                 $res->isNew = false;
+                $res->updatePrimary();
             }
         }
         return $result;
+    }
+
+    public function updatePrimary()
+    {
+        foreach($this->primary_key as $key => $val) {
+            $this->primary_key[$key] = $this->values->$key;
+        }
     }
 
     public function __get($name)
