@@ -47,14 +47,14 @@ class App
 
         $passArguements = [];
         foreach($arguments as $arguement) {
-            if($arguement->getClass() == 'Eboo\Request') {
+            if($arguement->getClass()->name == 'Eboo\Request') {
                 $passArguements[] = $request;
             } else {
                 if(array_key_exists($arguement->name,$variables)) {
                     $passArguements[] = $variables[$arguement->name];
                 } else {
                     if(!$arguement->isOptional()) {
-                        return new Response("{$arguement->name} {$arguement->getClass()} must be passed in to the function",500);
+                        return new Response("{$arguement->name} {$arguement->getClass()->name} must be passed in to the function",500);
                     }
                 }
             }
