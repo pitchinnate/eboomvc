@@ -12,7 +12,7 @@ class Model
     protected $primary_key = [];
     protected $errors = [];
 
-    protected static $column_array = [];
+    protected static $column_array;
 
     public function __construct($id=null)
     {
@@ -49,7 +49,7 @@ class Model
 
     public function getColumns()
     {
-        if(count(self::$column_array) == 0) {
+        if(empty(self::$column_array)) {
             $result = $this->database->getTableColumns($this->table);
             self::$column_array = $result;
             foreach ($result as $column) {
