@@ -20,10 +20,11 @@ class Model
     {
         $this->database = \Eboo\Factory\DatabaseFactory::getDatabase();
 
-        $this->values = new \stdClass();
-        $this->columns = $this->getColumns();
         $this->called_class = get_called_class();
         d($this->called_class);
+
+        $this->values = new \stdClass();
+        $this->columns = $this->getColumns();
 
         if (isset($id)) {
             $this->isNew = false;
