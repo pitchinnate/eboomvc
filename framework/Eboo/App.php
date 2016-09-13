@@ -25,14 +25,14 @@ class App
 
     public function getRoute(Router $router, Request $request)
     {
-        list($action,$variables) = $router->getRoute($request);
-        if(!$action) {
+        $response = $router->getRoute($request);
+        if(!$response['action']) {
             return new Response('Page Not Found',404);
         }
-        if(is_callable($action)) {
-            return $action($variables);
+        if(is_callable($response['action'])) {
+            return $response['action']($response['variables']);
         } else {
-            return $this->callController($action,$variables,$request);
+            return $this->callController($response['action'],$response['variables'],$request);
         }
     }
 
