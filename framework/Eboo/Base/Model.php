@@ -9,7 +9,7 @@ class Model
     protected $columns;
     protected $isNew = true;
     protected $values;
-    protected $primary_key;
+    protected $primary_key = [];
     protected $errors;
 
     protected static $column_array;
