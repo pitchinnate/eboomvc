@@ -138,6 +138,7 @@ class Model
         if ($result) {
             $result->isNew = false;
             $result->updatePrimary();
+            $result->getColumns();
         }
         return $result;
     }
@@ -150,6 +151,7 @@ class Model
             foreach ($result as $res) {
                 $res->isNew = false;
                 $res->updatePrimary();
+                $result->getColumns();
             }
         }
         return $result;
